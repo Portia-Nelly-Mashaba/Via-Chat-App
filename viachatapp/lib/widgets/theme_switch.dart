@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 
-class ThemeSwitch extends StatefulWidget {
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:viachatapp/providers/active_theme_providers.dart';
+
+class ThemeSwitch extends ConsumerStatefulWidget {
   const ThemeSwitch({super.key});
 
   @override
-  State<ThemeSwitch> createState() => _ThemeSwitch();
+  ConsumerState<ThemeSwitch> createState() => _ThemeSwitch();
 }
 
-class _ThemeSwitch extends State<ThemeSwitch> {
+class _ThemeSwitch extends ConsumerState<ThemeSwitch> {
+  void toggleTheme(bool value) {
+    ref.read(activeThemeProvider.notifier).state =
+        value ? Themes.dark : Themes.light;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Switch.adaptive(
+      activeColor: Theme.of(context).colorScheme.secondary,
+      value: ref.watch(activeThemeProvider) == Themes.dark,
+      onChanged: toggleTheme,
+    );
   }
 }

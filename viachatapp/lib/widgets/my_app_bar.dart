@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:viachatapp/widgets/theme_switch.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -12,6 +13,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           color: Theme.of(context).colorScheme.onPrimary,
         ),
       ),
+      actions: [
+        Row(
+          children: [
+            Icon(Icons.dark_mode),
+            SizedBox(width: 8),
+            ThemeSwitch(),
+          ],
+        )
+      ],
     );
   }
 
