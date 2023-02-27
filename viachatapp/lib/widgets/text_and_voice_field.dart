@@ -17,11 +17,23 @@ class _TextAndVoiceField extends State<TextAndVoiceField> {
       children: [
         Expanded(
           child: TextField(
+            cursorColor: Theme.of(context).colorScheme.onPrimary,
             decoration: InputDecoration(
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                borderRadius: BorderRadius.circular(
+                  12,
+                ),
+              ),
             ),
           ),
+        ),
+        const SizedBox(
+          width: 06,
         ),
       ],
     );
