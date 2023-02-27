@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:viachatapp/providers/active_theme_providers.dart';
 import 'package:viachatapp/widgets/theme_switch.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({super.key});
@@ -16,9 +18,15 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Row(
           children: [
-            Icon(Icons.dark_mode),
-            SizedBox(width: 8),
-            ThemeSwitch(),
+            Consumer(
+              builder: (context, ref, child) => Icon(
+                ref.watch(activeThemeProvider) == Themes.dark
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+              ),
+            ),
+            const SizedBox(width: 8),
+            const ThemeSwitch(),
           ],
         )
       ],
