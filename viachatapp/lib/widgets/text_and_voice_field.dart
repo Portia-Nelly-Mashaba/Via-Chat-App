@@ -70,7 +70,7 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
           width: 06,
         ),
         ToggleButton(
-          //isListening: _isListening,
+          isListening: _isListening,
           isReplying: _isReplying,
           inputMode: _inputMode,
           sendTextMessage: () {
