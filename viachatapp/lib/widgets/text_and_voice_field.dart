@@ -88,6 +88,8 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
   void sendTextMessage(String message) async {
     setReplyingState(true);
     addToChatList(message, true, DateTime.now().toString());
+    addToChatList('Typing...', false, 'typing');
+    setInputMode(InputMode.voice);
     final aiResponse = await _openAI.getResponse(message);
     addToChatList(aiResponse, false, DateTime.now().toString());
     setReplyingState(false);
