@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../widgets/chat_item.dart';
 import '../widgets/text_and_voice_field.dart';
 import '../widgets/my_app_bar.dart';
 

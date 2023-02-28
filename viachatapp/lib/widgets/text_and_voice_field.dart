@@ -19,6 +19,15 @@ class TextAndVoiceField extends StatefulWidget {
 
 class _TextAndVoiceField extends State<TextAndVoiceField> {
   InputMode _inputMode = InputMode.voice;
+  final _messageController = TextEditingController();
+
+  @override
+  void dispose() {
+    _messageController.dispose();
+    // _openAI.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
