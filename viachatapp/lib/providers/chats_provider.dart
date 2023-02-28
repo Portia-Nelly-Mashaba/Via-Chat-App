@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:viachatapp/models/chat_model.dart';
 
+import '';
+
 class ChatNotifier extends StateNotifier<List<ChatModel>> {
   ChatNotifier() : super([]);
   void add(ChatModel chatModel) {
