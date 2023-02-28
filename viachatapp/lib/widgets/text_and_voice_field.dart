@@ -22,7 +22,7 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
   final _messageController = TextEditingController();
   final AIHandler _openAI = AIHandler();
   //final VoiceHandler voiceHandler = VoiceHandler();
-  //var _isReplying = false;
+  var _isReplying = false;
   //var _isListening = false;
 
   @override
@@ -38,6 +38,7 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
       children: [
         Expanded(
           child: TextField(
+            controller: _messageController,
             onChanged: (value) {
               value.isNotEmpty
                   ? setInputMode(InputMode.text)
@@ -62,6 +63,8 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
           width: 06,
         ),
         ToggleButton(
+          //isListening: _isListening,
+          isReplying: _isReplying,
           inputMode: _inputMode,
           sendTextMessage: () {
             final message = _messageController.text;
@@ -83,9 +86,17 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
   void sendVoiceMessage() {}
 
   void sendTextMessage(String message) async {
+    setReplyingState(true);
     addToChatList(message, true, DateTime.now().toString());
     final aiResponse = await _openAI.getResponse(message);
     addToChatList(aiResponse, false, DateTime.now().toString());
+    setReplyingState(false);
+  }
+
+  void setReplyingState(bool isReplying) {
+    setState(() {
+      _isReplying = isReplying;
+    });
   }
 
   void removeTyping() {
