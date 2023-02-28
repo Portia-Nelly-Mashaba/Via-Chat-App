@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:viachatapp/models/chat_model.dart';
 import 'package:viachatapp/providers/chats_provider.dart';
-
+import 'package:viachatapp/services/ai_handler.dart';
+import 'package:viachatapp/services/voice_handler.dart';
 import 'package:viachatapp/widgets/toggle_button.dart';
 
 enum InputMode {
@@ -21,14 +22,20 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
   InputMode _inputMode = InputMode.voice;
   final _messageController = TextEditingController();
   final AIHandler _openAI = AIHandler();
-  //final VoiceHandler voiceHandler = VoiceHandler();
+  final VoiceHandler voiceHandler = VoiceHandler();
   var _isReplying = false;
-  //var _isListening = false;
+  var _isListening = false;
+
+  @override
+  void initState() {
+    voiceHandler.initSpeech();
+    super.initState();
+  }
 
   @override
   void dispose() {
     _messageController.dispose();
-    // _openAI.dispose();
+    _openAI.dispose();
     super.dispose();
   }
 
@@ -83,7 +90,21 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
     });
   }
 
-  void sendVoiceMessage() {}
+  void sendVoiceMessage() async {
+    if (!voiceHandler.isEnabled) {
+      print('Not supported');
+      return;
+    }
+    if (voiceHandler.speechToText.isListening) {
+      await voiceHandler.stopListening();
+      setListeningState(false);
+    } else {
+      setListeningState(true);
+      final result = await voiceHandler.startListening();
+      setListeningState(false);
+      sendTextMessage(result);
+    }
+  }
 
   void sendTextMessage(String message) async {
     setReplyingState(true);
@@ -96,14 +117,15 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
     setReplyingState(false);
   }
 
-  void removeTyping() {
-    final chats = ref.read(chatsProvider.notifier);
-    chats.removeTyping();
-  }
-
   void setReplyingState(bool isReplying) {
     setState(() {
       _isReplying = isReplying;
+    });
+  }
+
+  void setListeningState(bool isListening) {
+    setState(() {
+      _isListening = isListening;
     });
   }
 
