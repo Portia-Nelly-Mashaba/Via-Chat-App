@@ -91,8 +91,14 @@ class _TextAndVoiceField extends ConsumerState<TextAndVoiceField> {
     addToChatList('Typing...', false, 'typing');
     setInputMode(InputMode.voice);
     final aiResponse = await _openAI.getResponse(message);
+    removeTyping();
     addToChatList(aiResponse, false, DateTime.now().toString());
     setReplyingState(false);
+  }
+
+  void removeTyping() {
+    final chats = ref.read(chatsProvider.notifier);
+    chats.removeTyping();
   }
 
   void setReplyingState(bool isReplying) {
