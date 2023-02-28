@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'package:viachatapp/providers/chats_provider.dart';
 import '../widgets/chat_item.dart';
 import '../widgets/text_and_voice_field.dart';
 import '../widgets/my_app_bar.dart';
@@ -17,8 +18,8 @@ class _ChatScreen extends State<ChatScreen> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
-      appBar: const MyAppBar(),
-      body: Column(
+        appBar: const MyAppBar(),
+        body: Column(
           children: [
             Expanded(
               child: Consumer(builder: (context, ref, child) {
@@ -41,7 +42,6 @@ class _ChatScreen extends State<ChatScreen> {
               height: 10,
             ),
           ],
-        ));,
-    );
+        ));
   }
 }
