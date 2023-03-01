@@ -17,6 +17,7 @@ class App extends ConsumerWidget {
     final activeTheme = ref.watch(activeThemeProvider);
     return MaterialApp(
       theme: lightTheme,
+      debugShowCheckedModeBanner: false,
       darkTheme: darkTheme,
       themeMode: activeTheme == Themes.dark ? ThemeMode.dark : ThemeMode.light,
       home: const ChatScreen(),
