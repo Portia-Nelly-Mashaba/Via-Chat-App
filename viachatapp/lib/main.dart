@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:viachatapp/screens/chat_screen.dart';
 import 'package:viachatapp/providers/active_theme_providers.dart';
 import 'constants/themes.dart';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const ProviderScope(child: App()));
 }
 
